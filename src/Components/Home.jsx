@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import AttendanceReport from "./AttendanceReport";
+import KanbanBoard from "./KanbanBoard";
 
 const COLORS = ["#4CAF50", "#FF7043"];
 
@@ -122,27 +123,32 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {stats.map((stat, index) => (
-            <div key={index} className="p-4 bg-white shadow-lg rounded-lg">
-              <h3 className="text-gray-500 text-sm font-medium flex items-center justify-between">
-                {stat.title}
-                <button className="text-gray-400">⋮</button>
-              </h3>
-              <div className="flex items-center justify-between mt-2">
-                <p className="text-3xl font-bold">{stat.value}</p>
-                <span
-                  className={`text-sm px-2 py-1 rounded-full ${
-                    stat.change > 0
-                      ? "bg-green-100 text-green-600"
-                      : "bg-red-100 text-red-600"
-                  }`}
-                >
-                  {stat.change > 0
-                    ? `▲ ${stat.change}%`
-                    : `▼ ${Math.abs(stat.change)}%`}
-                </span>
+            <div
+              key={index}
+              className="p-4 bg-white shadow-lg rounded-lg flex flex-col justify-between"
+            >
+              <div className="flex flex-col gap-1">
+                <h3 className="text-gray-500 text-sm font-medium flex items-center justify-between">
+                  {stat.title}
+                  <button className="text-gray-400">⋮</button>
+                </h3>
+                <div className="flex items-center justify-between mt-2">
+                  <p className="text-3xl font-bold">{stat.value}</p>
+                  <span
+                    className={`text-sm px-2 py-1 rounded-full ${
+                      stat.change > 0
+                        ? "bg-green-100 text-green-600"
+                        : "bg-red-100 text-red-600"
+                    }`}
+                  >
+                    {stat.change > 0
+                      ? `▲ ${stat.change}%`
+                      : `▼ ${Math.abs(stat.change)}%`}
+                  </span>
+                </div>
+                <p className="text-gray-500 text-xs mt-1">{stat.description}</p>
               </div>
-              <p className="text-gray-500 text-xs mt-1">{stat.description}</p>
-              <button className="text-blue-500 text-sm font-medium mt-2">
+              <button className="text-blue-500 text-sm font-medium mt-2 text-start">
                 Details →
               </button>
             </div>
@@ -174,7 +180,7 @@ const Dashboard = () => {
       </div>
 
       {/* Task Management */}
-      <div className="mt-8 border p-3 rounded-lg border-gray-300 shadow-2xs">
+      {/* <div className="mt-8 border p-3 rounded-lg border-gray-300 shadow-2xs">
         <h2 className="text-2xl font-bold mb-4">Tasks</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {Object.entries(kanbanTasks).map(([status, tasks]) => (
@@ -203,8 +209,9 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
+      <KanbanBoard />
       {/* Charts Section */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Monthly Revenue Trends */}

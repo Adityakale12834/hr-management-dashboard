@@ -7,11 +7,49 @@ import Signup from "./auth/Signup";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../app/firebase";
 import Horizontal_Nav from "./Horizontal_Nav";
-
+// import { Calendar } from "lucide-react";
+import { useState } from "react";
+import {
+  Home as hm,
+  CheckSquare,
+  Mail,
+  Calendar,
+  Folder,
+  Users,
+  Clock,
+  CreditCard,
+  Briefcase,
+  Settings,
+  HelpCircle,
+  LogOut,
+  ChevronDown,
+} from "lucide-react";
 const auth = getAuth(app);
 
 function Navbar() {
   const navigate = useNavigate();
+
+  const [active, setActive] = useState("Dashboard");
+
+  const menuItems = [
+    { name: "Dashboard", icon: hm },
+    { name: "Tasks", icon: CheckSquare },
+    { name: "Inbox", icon: Mail },
+    { name: "Calendar", icon: Calendar },
+    { name: "Projects", icon: Folder },
+  ];
+
+  const hrManagement = [
+    { name: "Employees", icon: Users },
+    { name: "Attendance", icon: Clock },
+    { name: "Payroll", icon: CreditCard },
+    { name: "Hiring", icon: Briefcase },
+  ];
+
+  const analyticsReports = [
+    { name: "Settings", icon: Settings },
+    { name: "Help & Support", icon: HelpCircle },
+  ];
   return (
     <div>
       <Horizontal_Nav />
@@ -44,7 +82,7 @@ function Navbar() {
           class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white shadow-md"
           aria-label="Sidebar"
         >
-          <div class="h-full px-3 py-4 overflow-y-auto">
+          {/* <div class="h-full px-3 py-4 overflow-y-auto">
             <ul class="space-y-2 font-medium">
               <li>
                 <a
@@ -128,6 +166,80 @@ function Navbar() {
                 </Link>
               </li>
             </ul>
+          </div> */}
+          <div className="w-64 h-screen bg-white shadow-lg p-5 flex flex-col overflow-y-auto">
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="bg-blue-500 w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-bold ">
+                +
+              </div>
+              <h1 className="text-xl font-semibold">Efficio</h1>
+            </div>
+            <div className="flex items-center p-3 rounded-lg bg-gray-100 mb-4">
+              <img
+                src="profile.jpg"
+                alt="Profile"
+                className="w-10 h-10 rounded-full mr-3 bg-cover"
+              />
+              <div className="flex-1">
+                <p className="text-sm font-semibold">Arnold Smith</p>
+                <p className="text-xs text-gray-500">arnoldsmith@gmail.com</p>
+              </div>
+              <ChevronDown className="w-4 h-4 text-gray-500" />
+            </div>
+            <div className="mb-6">
+              {/* <p className="text-gray-500 text-sm">Main Menu</p> */}
+              {menuItems.map((item) => (
+                <div
+                  key={item.name}
+                  className={`flex items-center p-3 rounded-lg cursor-pointer ${
+                    active === item.name ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => setActive(item.name)}
+                >
+                  <item.icon className="w-5 h-5 mr-3" />
+                  {item.name}
+                </div>
+              ))}
+            </div>
+            <div className="mb-6">
+              <p className="text-gray-500 text-sm">HR Management</p>
+              {hrManagement.map((item) => (
+                <div
+                  key={item.name}
+                  className={`flex items-center p-3 rounded-lg cursor-pointer ${
+                    active === item.name ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => setActive(item.name)}
+                >
+                  <item.icon className="w-5 h-5 mr-3" />
+                  {item.name}
+                </div>
+              ))}
+            </div>
+            <div className="mb-6">
+              <p className="text-gray-500 text-sm">Analytics & Reports</p>
+              {analyticsReports.map((item) => (
+                <div
+                  key={item.name}
+                  className={`flex items-center p-3 rounded-lg cursor-pointer ${
+                    active === item.name ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => setActive(item.name)}
+                >
+                  <item.icon className="w-5 h-5 mr-3" />
+                  {item.name}
+                </div>
+              ))}
+            </div>
+            <div className="mt-auto">
+              <div
+                className="flex items-center p-3 rounded-lg cursor-pointer text-red-600"
+                onClick={() => console.log("Logging out...")}
+              >
+                <LogOut className="w-5 h-5 mr-3" />
+                Log Out
+              </div>
+            </div>
           </div>
         </aside>
 

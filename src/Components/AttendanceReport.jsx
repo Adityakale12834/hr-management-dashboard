@@ -6,11 +6,11 @@ const rows = [200, 150, 100, 50, 10]; // Labels on the left (Y-axis)
 
 // Sample heatmap data
 const heatmapData = [
-  [2, 3, 1, 3, 4, 2], // Row 1
-  [4, 3, 2, 3, 2, 1], // Row 2
-  [3, 2, 4, 3, 2, 4], // Row 3
-  [1, 4, 3, 2, 3, 2], // Row 4
-  [4, 3, 2, 1, 4, 3], // Row 5
+  [1, 2, 1, 2, 1, 1], // Row 1
+  [2, 2, 2, 2, 2, 2], // Row 2
+  [3, 2, 2, 3, 2, 3], // Row 3
+  [3, 3, 3, 4, 3, 3], // Row 4
+  [4, 4, 4, 4, 4, 4], // Row 5
 ];
 
 // Define shades of blue based on intensity
@@ -67,7 +67,7 @@ const AttendanceReport = () => {
             {row.map((value, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className="h-10 w-10 rounded-md"
+                className="h-8 w-10 rounded-md"
                 style={{ backgroundColor: shades[value - 1] }}
               />
             ))}
