@@ -1,108 +1,231 @@
-import React from "react";
+// src/components/EmployeeTree.jsx
+import React, { useState, useEffect, useRef } from "react";
+import Tree from "react-d3-tree";
 
-function Employee() {
+// Updated sample data with more fields
+const orgChartData = {
+  name: "Aditya Kale",
+  attributes: {
+    title: "CEO",
+    email: "Aditya.kale@example.com",
+    phone: "+1-234-567-8900",
+    department: "Management",
+  },
+  children: [
+    {
+      name: "Mayur Satone",
+      attributes: {
+        title: "CTO",
+        email: "Mayur.satone@example.com",
+        phone: "+1-987-654-3210",
+        department: "Technology",
+      },
+      children: [
+        {
+          name: "Atharv Darvekar",
+          attributes: {
+            title: "Finance Manager",
+            email: "Atharv.darvekar@example.com",
+            phone: "+1-555-123-4567",
+            department: "Finance",
+          },
+        },
+        {
+          name: "Siddhesh Mahulkar",
+          attributes: {
+            title: "Accountant",
+            email: "Siddhesh.Mahulkar@example.com",
+            phone: "+1-444-987-6543",
+            department: "Finance",
+          },
+        },
+        {
+          name: "Amélie Dubois",
+          attributes: {
+            title: "Security Analyst",
+            email: "Amélie.Dubois@example.com",
+            phone: "+1-333-876-5432",
+            department: "Security",
+          },
+        },
+      ],
+    },
+    {
+      name: "Nikolai Petrov",
+      attributes: {
+        title: "COO",
+        email: "Nikolai.Petrov@example.com",
+        phone: "+1-888-222-3333",
+        department: "Operations",
+      },
+      children: [
+        {
+          name: "Leila Al-Farsi",
+          attributes: {
+            title: "Operations Manager",
+            email: "Leila.Al.Farsi@example.com",
+            phone: "+1-111-222-3334",
+            department: "Operations",
+          },
+        },
+        {
+          name: "Elias Schneider",
+          attributes: {
+            title: "Logistics Coordinator",
+            email: "Elias.Schneider@example.com",
+            phone: "+1-222-333-4445",
+            department: "Logistics",
+          },
+        },
+      ],
+    },
+    {
+      name: "Rafael Costa",
+      attributes: {
+        title: "CFO",
+        email: "Rafael.Costa@example.com",
+        phone: "+1-777-555-6666",
+        department: "Finance",
+      },
+      children: [
+        {
+          name: "Ingrid Bjornsson",
+          attributes: {
+            title: "Treasury Head",
+            email: "Ingrid.Bjornsson@example.com",
+            phone: "+1-444-666-7777",
+            department: "Finance",
+          },
+        },
+        {
+          name: "Karim Haddad",
+          attributes: {
+            title: "Risk Analyst",
+            email: "Karim.Haddad@example.com",
+            phone: "+1-999-888-7776",
+            department: "Risk Management",
+          },
+        },
+      ],
+    },
+  ],
+};
+
+// Node colors based on position
+const getNodeColor = (title) => {
+  switch (title) {
+    case "CEO":
+      return "bg-gradient-to-r from-blue-600 to-blue-400 text-white shadow-lg";
+    case "CTO":
+      return "bg-gradient-to-r from-purple-600 to-purple-400 text-white shadow-lg";
+    case "COO":
+      return "bg-gradient-to-r from-green-600 to-green-400 text-white shadow-lg";
+    case "CFO":
+      return "bg-gradient-to-r from-yellow-500 to-yellow-300 text-black shadow-lg";
+    case "Finance Manager":
+    case "Treasury Head":
+      return "bg-gradient-to-r from-teal-600 to-teal-400 text-white shadow-lg";
+    case "Accountant":
+    case "Risk Analyst":
+      return "bg-gradient-to-r from-orange-500 to-orange-300 text-white shadow-lg";
+    case "Security Analyst":
+    case "Logistics Coordinator":
+      return "bg-gradient-to-r from-red-600 to-red-400 text-white shadow-lg";
+    case "Operations Manager":
+      return "bg-gradient-to-r from-indigo-600 to-indigo-400 text-white shadow-lg";
+    default:
+      return "bg-gradient-to-r from-gray-300 to-gray-100 text-gray-800 shadow-md";
+  }
+};
+
+// Avatar initials generator
+const getInitials = (name) => {
+  const initials = name
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+  return initials;
+};
+
+// Custom render function for tree nodes
+const renderCustomNode = ({ nodeDatum, toggleNode }) => {
+  const colorClass = getNodeColor(nodeDatum.attributes?.title);
+
   return (
-    <div className="">
-      <div class="text-center">
-        <button
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          type="button"
-          data-drawer-target="drawer-bottom-example"
-          data-drawer-show="drawer-bottom-example"
-          data-drawer-placement="bottom"
-          aria-controls="drawer-bottom-example"
-        >
-          Show bottom drawer
-        </button>
-      </div>
+    <foreignObject width="300" height="150" x="-150" y="-50">
+      <div
+        onClick={toggleNode}
+        className={`flex items-center ${colorClass} cursor-pointer border border-gray-300 rounded-full shadow-lg p-4 transition-all transform`}
+      >
+        {/* Circular Avatar with Initials */}
+        <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center text-lg font-bold text-gray-700 border-2 border-gray-300 shadow-md">
+          {getInitials(nodeDatum.name)}
+        </div>
 
-      <div className="relative">
-        <div
-          id="drawer-bottom-example"
-          class="fixed bottom-0 right-0 left-0 z-50 p-4 transition-transform bg-white dark:bg-gray-800 transform-none"
-          tabindex="-1"
-          aria-labelledby="drawer-bottom-label"
-        >
-          <h5
-            id="drawer-bottom-label"
-            class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"
-          >
-            <svg
-              class="w-4 h-4 me-2.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>
-            Add Employees
-          </h5>
-          <button
-            type="button"
-            data-drawer-hide="drawer-bottom-example"
-            aria-controls="drawer-bottom-example"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
-          >
-            <svg
-              class="w-3 h-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-              />
-            </svg>
-            <span class="sr-only">Close menu</span>
-          </button>
-          <p class="max-w-lg mb-6 text-sm text-gray-500 dark:text-gray-400">
-            Supercharge your hiring by taking advantage of our{" "}
-            <a
-              href="#"
-              class="text-blue-600 underline font-medium dark:text-blue-500 hover:no-underline"
-            >
-              limited-time sale
-            </a>{" "}
-            for Flowbite Docs + Job Board. Unlimited access to over 190K
-            top-ranked candidates and the #1 design job board.
-          </p>
-          <a
-            href="#"
-            class="px-4 py-2 me-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-          >
-            Learn more
-          </a>
-          <a
-            href="#"
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          >
-            Get access{" "}
-            <svg
-              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-          </a>
+        {/* Employee Info on the Right */}
+        <div className="ml-4 text-left text-white">
+          <h3 className="text-lg font-semibold">{nodeDatum.name}</h3>
+          {nodeDatum.attributes?.title && (
+            <p className="text-sm opacity-90">{nodeDatum.attributes.title}</p>
+          )}
+          {nodeDatum.attributes?.email && (
+            <p className="text-xs opacity-75">
+              <a
+                href={`mailto:${nodeDatum.attributes.email}`}
+                className="underline hover:text-blue-200"
+              >
+                {nodeDatum.attributes.email}
+              </a>
+            </p>
+          )}
+          {nodeDatum.attributes?.phone && (
+            <p className="text-xs opacity-75">{nodeDatum.attributes.phone}</p>
+          )}
+          {nodeDatum.attributes?.department && (
+            <p className="text-xs opacity-75">
+              {nodeDatum.attributes.department}
+            </p>
+          )}
         </div>
       </div>
+    </foreignObject>
+  );
+};
+
+const EmployeeTree = () => {
+  const treeContainerRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
+
+  // Adjust tree size dynamically based on container size
+  useEffect(() => {
+    if (treeContainerRef.current) {
+      setDimensions({
+        width: treeContainerRef.current.offsetWidth,
+        height: treeContainerRef.current.offsetHeight,
+      });
+    }
+  }, []);
+
+  return (
+    <div
+      ref={treeContainerRef}
+      className="w-full h-screen bg-gradient-to-br overflow-hidden p-5"
+    >
+      <Tree
+        data={orgChartData}
+        orientation="vertical"
+        collapsible={true}
+        translate={{ x: dimensions.width / 2, y: 100 }}
+        pathFunc="diagonal"
+        nodeSize={{ x: 260, y: 170 }}
+        separation={{ siblings: 1.5, nonSiblings: 2 }}
+        zoomable={true}
+        initialDepth={1}
+        renderCustomNodeElement={(rd3tProps) => renderCustomNode(rd3tProps)}
+      />
     </div>
   );
-}
+};
 
-export default Employee;
+export default EmployeeTree;

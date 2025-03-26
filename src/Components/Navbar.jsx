@@ -24,6 +24,8 @@ import {
   LogOut,
   ChevronDown,
 } from "lucide-react";
+import Attendance from "./Attendance";
+import ProjectHome from "./project/ProjectHome";
 const auth = getAuth(app);
 
 function Navbar() {
@@ -32,16 +34,16 @@ function Navbar() {
   const [active, setActive] = useState("Dashboard");
 
   const menuItems = [
-    { name: "Dashboard", icon: hm },
+    { name: "Dashboard", icon: hm, path: "/" },
     { name: "Tasks", icon: CheckSquare },
     { name: "Inbox", icon: Mail },
     { name: "Calendar", icon: Calendar },
-    { name: "Projects", icon: Folder },
+    { name: "Projects", icon: Folder, path: "/project" },
   ];
 
   const hrManagement = [
-    { name: "Employees", icon: Users },
-    { name: "Attendance", icon: Clock },
+    { name: "Employees", icon: Users, path: "/employee" },
+    { name: "Attendance", icon: Clock, path: "/attendance" },
     { name: "Payroll", icon: CreditCard },
     { name: "Hiring", icon: Briefcase },
   ];
@@ -189,31 +191,35 @@ function Navbar() {
             <div className="mb-6">
               {/* <p className="text-gray-500 text-sm">Main Menu</p> */}
               {menuItems.map((item) => (
-                <div
-                  key={item.name}
-                  className={`flex items-center p-3 rounded-lg cursor-pointer ${
-                    active === item.name ? "bg-gray-200" : ""
-                  }`}
-                  onClick={() => setActive(item.name)}
-                >
-                  <item.icon className="w-5 h-5 mr-3" />
-                  {item.name}
-                </div>
+                <Link to={item.path}>
+                  <div
+                    key={item.name}
+                    className={`flex items-center p-3 rounded-lg cursor-pointer ${
+                      active === item.name ? "bg-gray-200" : ""
+                    }`}
+                    onClick={() => setActive(item.name)}
+                  >
+                    <item.icon className="w-5 h-5 mr-3" />
+                    {item.name}
+                  </div>
+                </Link>
               ))}
             </div>
             <div className="mb-6">
               <p className="text-gray-500 text-sm">HR Management</p>
               {hrManagement.map((item) => (
-                <div
-                  key={item.name}
-                  className={`flex items-center p-3 rounded-lg cursor-pointer ${
-                    active === item.name ? "bg-gray-200" : ""
-                  }`}
-                  onClick={() => setActive(item.name)}
-                >
-                  <item.icon className="w-5 h-5 mr-3" />
-                  {item.name}
-                </div>
+                <Link to={item.path}>
+                  <div
+                    key={item.name}
+                    className={`flex items-center p-3 rounded-lg cursor-pointer ${
+                      active === item.name ? "bg-gray-200" : ""
+                    }`}
+                    onClick={() => setActive(item.name)}
+                  >
+                    <item.icon className="w-5 h-5 mr-3" />
+                    {item.name}
+                  </div>
+                </Link>
               ))}
             </div>
             <div className="mb-6">
@@ -502,6 +508,8 @@ function Navbar() {
               <Route path="/" element={<Home />} />
               <Route path="/employee" element={<Employee />} />
               <Route path="/payroll" element={<Payroll />} />
+              <Route path="/attendance" element={<Attendance />} />
+              <Route path="/project" element={<ProjectHome />} />
             </Routes>
           </div>
         </div>

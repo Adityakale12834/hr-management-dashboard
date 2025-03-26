@@ -3,7 +3,7 @@ import { Search, Bell, Info, Square } from "lucide-react";
 
 function Horizontal_Nav() {
   return (
-    <nav className="flex items-center justify-between px-6 py-3 bg-white shadow-md sticky top-0 sm:ml-64">
+    <nav className="flex items-center justify-between px-6 py-3 bg-white shadow-md sticky top-0 sm:ml-64 z-50">
       {/* Left Section - Logo and Name */}
       {/* <div className="flex items-center space-x-3">
         <div className="text-blue-500 text-2xl font-bold">+</div>
