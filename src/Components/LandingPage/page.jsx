@@ -4,7 +4,7 @@ import Hero from "./Hero";
 import Footer from "./Footer";
 import Pricing from "./Pricing";
 import FeaturesSection from "./FeatureSelection";
-import Testimonials from "./testimonials";
+import Testimonials from "./Testimonials";
 
 export default function LandingPage() {
   return (
