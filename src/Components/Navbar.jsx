@@ -50,6 +50,8 @@ function Navbar() {
     { name: "Projects", icon: Folder, path: "/project" },
   ];
 
+  //console.log("hello");
+
   const hrManagement = [
     { name: "Employees", icon: Users, path: "/employee" },
     { name: "Attendance", icon: Clock, path: "/attendance" },
