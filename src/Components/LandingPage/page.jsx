@@ -6,7 +6,7 @@ import Pricing from "./Pricing";
 import FeaturesSection from "./FeatureSelection";
 import Testimonials from "./Testimonials";
 import Faq from "./Faq";
-import Contact_us from "./contact_us";
+import Contact_us from "./Contact_us";
 
 export default function LandingPage() {
   return (
