@@ -29,7 +29,7 @@ import Attendance from "./Attendance";
 import ProjectHome from "./project/ProjectHome";
 import Inbox from "./Inbox/Inbox";
 import Calendar from "./calendar/Calendar";
-import Tasks from "./tasks/task";
+import Tasks from "./tasks/Task";
 import Projects from "./project/Project";
 // import Payroll from "../Components/payroll/Payroll";
 import Payroll from "./payroll/Navbar";
