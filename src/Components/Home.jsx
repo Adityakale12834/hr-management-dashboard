@@ -107,7 +107,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-6 bg-gray-100 text-gray-900 min-h-screen">
+    <div className="p-6 text-gray-900 min-h-screen">
       {/* Header Section */}
       <div className="flex items-center justify-between mb-6">
         <div>

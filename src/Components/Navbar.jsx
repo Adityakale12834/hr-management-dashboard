@@ -2,18 +2,19 @@ import React from "react";
 import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./Home";
 import Employee from "./Employee";
-import Payroll from "./Payroll";
+// import Payroll from "./Payroll";
 import Signup from "./auth/Signup";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../app/firebase";
 import Horizontal_Nav from "./Horizontal_Nav";
+import HiringNavBar from "./hiring/HiringNavBar";
 // import { Calendar } from "lucide-react";
 import { useState } from "react";
 import {
   Home as hm,
   CheckSquare,
   Mail,
-  Calendar,
+  Calendar as cl,
   Folder,
   Users,
   Clock,
@@ -26,6 +27,14 @@ import {
 } from "lucide-react";
 import Attendance from "./Attendance";
 import ProjectHome from "./project/ProjectHome";
+import Inbox from "./Inbox/Inbox";
+import Calendar from "./calendar/Calendar";
+import Tasks from "./tasks/task";
+import Projects from "./project/Project";
+// import Payroll from "../Components/payroll/Payroll";
+import Payroll from "./payroll/Navbar";
+import ProjectDashboard from "./hiring/ProjectDashboard";
+
 const auth = getAuth(app);
 
 function Navbar() {
@@ -34,18 +43,18 @@ function Navbar() {
   const [active, setActive] = useState("Dashboard");
 
   const menuItems = [
-    { name: "Dashboard", icon: hm, path: "/" },
-    { name: "Tasks", icon: CheckSquare },
-    { name: "Inbox", icon: Mail },
-    { name: "Calendar", icon: Calendar },
+    { name: "Dashboard", icon: hm, path: "/dashboard" },
+    { name: "Tasks", icon: CheckSquare, path: "/task" },
+    { name: "Inbox", icon: Mail, path: "/inbox" },
+    { name: "Calendar", icon: cl, path: "/calendar" },
     { name: "Projects", icon: Folder, path: "/project" },
   ];
 
   const hrManagement = [
     { name: "Employees", icon: Users, path: "/employee" },
     { name: "Attendance", icon: Clock, path: "/attendance" },
-    { name: "Payroll", icon: CreditCard },
-    { name: "Hiring", icon: Briefcase },
+    { name: "Payroll", icon: CreditCard, path: "/payroll" },
+    { name: "Hiring", icon: Briefcase, path: "/hiring" },
   ];
 
   const analyticsReports = [
@@ -250,7 +259,7 @@ function Navbar() {
         </aside>
 
         <div class="p-4 sm:ml-64">
-          <div class="p-4 rounded-lg dark:border-gray-700">
+          <div class="px-4 rounded-lg dark:border-gray-700">
             {/* <div class="grid grid-cols-3 gap-4 mb-4">
             <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
               <p class="text-2xl text-gray-400 dark:text-gray-500">
@@ -505,11 +514,17 @@ function Navbar() {
             </div>
           </div> */}
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<Home />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="/employee" element={<Employee />} />
               <Route path="/payroll" element={<Payroll />} />
               <Route path="/attendance" element={<Attendance />} />
-              <Route path="/project" element={<ProjectHome />} />
+              <Route path="/project" element={<Projects />} />
+              <Route path="/inbox" element={<Inbox />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/task" element={<Tasks />} />
+              <Route path="/payroll" element={<Payroll />} />
+              <Route path="/hiring" element={<HiringNavBar />} />
             </Routes>
           </div>
         </div>

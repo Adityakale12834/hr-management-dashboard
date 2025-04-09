@@ -21,3 +21,12 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.fixed.inset-0 {
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  backdrop-filter: blur(10px); /* Blur effect */
+}
+
+html {
+  scroll-behavior: smooth;
+}
